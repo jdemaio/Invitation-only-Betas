@@ -59,7 +59,7 @@ computerUDID=$(/usr/sbin/system_profiler SPHardwareDataType | /usr/bin/awk '/Har
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 decryptPassword() {
-	/bin/echo "${1}" | /usr/bin/openssl enc -aes256 -md sha256 -d -a -A -S "${2}" -k "${3}"
+	/bin/echo "${1}" | /usr/bin/openssl enc -aes256 -md md5 -d -a -A -S "${2}" -k "${3}"
 }
 
 
@@ -69,7 +69,7 @@ decryptPassword() {
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 readApiValue() {
-	apiRead=$( curl -H "Accept: text/xml" -sfu "${apiUsername}":"${apiPassword}" "${apiURL}"/JSSResource/computers/udid/"${computerUDID}"/subset/extension_attributes | xmllint --format - | grep -A3 "<name>${eaName}</name>" | awk -F'>|<' '/value/{print $3}' | tail -n 1 )
+	apiRead=$( curl -H "Accept: text/xml" -sfu "${apiUsername}":"${apiPassword}" "${apiURL}"JSSResource/computers/udid/"${computerUDID}"/subset/extension_attributes | xmllint --format - | grep -A3 "<name>${eaName}</name>" | awk -F'>|<' '/value/{print $3}' | tail -n 1 )
 }
 
 
